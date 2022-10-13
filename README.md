@@ -23,13 +23,21 @@ yarn install
  php bin/console doctrine:schema:validate
 ```
 
-**3. Compile SCSS & JS with Yarn:** The first execution and everytime that you want to change anything in the **assets** folder (styles or JS) you must recompile all the code using: 
+**3. Import initial data:** In order to generate the initial data this command should be executed:
+
+```bash
+php bin/console symfony:import-data /var/www/exam_input.json # this path corresponds to docker container path 
+
+```
+
+**4. Compile SCSS & JS with Yarn:** The first execution and everytime that you want to change anything in the **assets** folder (styles or JS) you must recompile all the code using: 
 
 ```bash
  yarn run dev
 ```
 
-**4. If any entity is modified** Run: 
+
+**5. If any entity is modified** Run: 
 
 ```bash
 php bin/console make:entity --regenerate Domain
