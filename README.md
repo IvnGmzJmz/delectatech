@@ -42,3 +42,10 @@ php bin/console make:entity --regenerate Domain
 - Doctrine mappings must be placed in ```config/doctrine/```
 
 - WebPack assets configuration is placed in ```webpack.config.js``` 
+
+- Tested on:
+    * PHP 7.3.33
+    * Composer 1.9.3
+    * Yarn 1.22.19
+    * Node 8.10.0 
+    * MariaDB 10.4.12
