@@ -16,9 +16,7 @@ class SegmentCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
+            ->add('name', TextType::class, [])
             ->add('restaurants', EntityType::class, [
                 'class' => Restaurant::class,
                 'label' => 'Restaurantes',
@@ -28,7 +26,6 @@ class SegmentCreateType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Crear', 
-                'attr' => ['class' => 'btn btn-primary'],
             ]);
     }
 }
