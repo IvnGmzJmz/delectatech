@@ -1,3 +1,11 @@
 home:
     path: /
-    controller: Webapp\Controller\WebappController::home
+    controller: App\Controller\SegmentController::listSegments
+
+detail:
+    path: /segment/{id}
+    controller: App\Controller\SegmentController::editSegment
+
+create:
+    path: /segment/
+    controller: App\Controller\SegmentController::createSegment

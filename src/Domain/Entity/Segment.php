@@ -6,6 +6,14 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\EntityListeners({SegmentListener::class})
+ */
 class Segment
 {
     /**
@@ -202,6 +210,7 @@ class Segment
      */
     public function setAveragePrice(?float $averagePrice): self
     {
+
         $this->averagePrice = $averagePrice;
 
         return $this;
@@ -259,4 +268,42 @@ class Segment
 
         return $this;
     }
+
+    public function recalculateAverages()
+    {
+        $restaurants = $this->getRestaurants();
+    
+        if ($restaurants->isEmpty()) {
+            $this->setAverages(null, null, null, 0);
+            return;
+        }
+    
+        $totalPrices = $totalSatisfactionRate = $totalPopularityRate = $totalReviews = 0;
+        $totalRestaurants = $restaurants->count();
+    
+        foreach ($restaurants as $restaurant) {
+            $totalPrices += $restaurant->getAveragePrice();
+            $totalSatisfactionRate += $restaurant->getSatisfactionRate();
+            $totalPopularityRate += $restaurant->getPopularityRate();
+            $totalReviews += $restaurant->getTotalReviews();
+        }
+    
+        $averagePrice = $totalPrices / $totalRestaurants;
+        $averageSatisfactionRate = $totalSatisfactionRate / $totalRestaurants;
+        $averagePopularityRate = $totalPopularityRate / $totalRestaurants;
+    
+        $totalReviews = max(0, $totalReviews);
+    
+        $this->setAverages($averagePrice, $averageSatisfactionRate, $averagePopularityRate, $totalReviews);
+    }
+    
+    private function setAverages($averagePrice, $averageSatisfactionRate, $averagePopularityRate, $totalReviews)
+    {
+        $this->setAveragePrice($averagePrice);
+        $this->setAverageSatisfactionRate($averageSatisfactionRate);
+        $this->setAveragePopularityRate($averagePopularityRate);
+        $this->setTotalReviews($totalReviews);
+    }
+    
+
 }

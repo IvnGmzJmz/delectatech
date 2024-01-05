@@ -45,3 +45,12 @@ services:
         resource: '../src/Domain/Services'
         autowire: true
         public: true
+
+    App\Controller\SegmentController:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+
+    App\EventListener\SegmentListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: prePersist }

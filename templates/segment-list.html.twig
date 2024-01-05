@@ -1,0 +1,27 @@
+{% extends "webapp/webapp_base.html.twig" %}
+
+{% block content_wrapper %}
+    <div class="d-flex align-items-center justify-content-between">
+        <h1>Listado de Segmentos</h1>
+        <a href="{{ path('create') }}" class="btn btn-success">Crear Nuevo Segmento</a>
+    </div>
+
+    <div class="row">
+        {% for segmento in segmentos %}
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{segmento.getName()}}</h5>
+                        <p class="card-text">Total Restaurantes: {{segmento.getRestaurants().count()}} </p>
+                        <p class="card-text">Popularidad Media: {{segmento.getAveragePopularityRate()}}</p>
+                        <p class="card-text">Satisfacción media: {{segmento.getAverageSatisfactionRate()}}</p>
+                        <p class="card-text">Precio medio: {{segmento.getAveragePrice()}}</p>
+                        <p class="card-text">Total Reviews: {{segmento.getTotalReviews()}} </p>
+                        <a href="{{ path('detail', {'id': segmento.id}) }}" class="btn btn-primary w-100">Ver Segmento</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
